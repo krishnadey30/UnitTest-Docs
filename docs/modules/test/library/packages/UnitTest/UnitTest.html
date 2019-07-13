@@ -135,30 +135,85 @@
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>Module UnitTest provides support for automated testing in Chapel .
+Any function of the form</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">funcName</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>is treated as a test function.</p>
+<p>Example</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
+
+<span class="k">proc</span> <span class="nf">test1</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">assertTrue</span><span class="p">(</span><span class="nx">True</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">test1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Specifying locales</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test2</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">proc</span> <span class="nf">test3</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">proc</span> <span class="nf">test4</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">maxLocales</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">minLocales</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Specifying Dependencies:</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test5</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">test3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">proc</span> <span class="nf">test6</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">test2</span><span class="p">,</span> <span class="nx">test5</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="class">
-<dt id="UnitTest.AssertionError">
-<em class="property">class </em><code class="descname">AssertionError</code>: Error<a class="headerlink" href="#UnitTest.AssertionError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assertion Error class. Raised when assert Function Failed</p>
-<dl class="attribute">
-<dt id="UnitTest.AssertionError.details">
-<em class="property">var </em><code class="descname">details</code>: string<a class="headerlink" href="#UnitTest.AssertionError.details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="UnitTest.AssertionError.init">
-<em class="property">proc </em><code class="descname">init</code><span class="sig-paren">(</span><em>details: string = &quot;&quot;</em><span class="sig-paren">)</span><a class="headerlink" href="#UnitTest.AssertionError.init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="UnitTest.AssertionError.message">
-<em class="property">override proc </em><code class="descname">message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UnitTest.AssertionError.message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<dt id="UnitTest.Test">
+<em class="property">class </em><code class="descname">Test</code><a class="headerlink" href="#UnitTest.Test" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="UnitTest.Test.skip">
+<em class="property">proc </em><code class="descname">skip</code><span class="sig-paren">(</span><em>reason: string = &quot;&quot;</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.skip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unconditionally skip a test.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>reason</strong> : <cite>string</cite> &#8211; the reason for skipping</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="function">
-<dt id="UnitTest.assertTrue">
-<em class="property">proc </em><code class="descname">assertTrue</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertTrue" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="UnitTest.Test.skipIf">
+<em class="property">proc </em><code class="descname">skipIf</code><span class="sig-paren">(</span><em>condition: bool</em>, <em>reason: string = &quot;&quot;</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.skipIf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Skip a test if the condition is true.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>condition</strong> : <cite>bool</cite> &#8211; the boolean condition</li>
+<li><strong>reason</strong> : <cite>string</cite> &#8211; the reason for skipping</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.assertTrue">
+<em class="property">proc </em><code class="descname">assertTrue</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertTrue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a boolean condition is true.  If it is false, prints
 &#8216;assert failed&#8217; and rasies AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -171,9 +226,9 @@
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="UnitTest.assertFalse">
-<em class="property">proc </em><code class="descname">assertFalse</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertFalse" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="UnitTest.Test.assertFalse">
+<em class="property">proc </em><code class="descname">assertFalse</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertFalse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a boolean condition is false.  If it is true, prints
 &#8216;assert failed&#8217; and raises AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -186,30 +241,164 @@
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="UnitTest.assertEqual">
-<em class="property">proc </em><code class="descname">assertEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertEqual" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="UnitTest.Test.assertEqual">
+<em class="property">proc </em><code class="descname">assertEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertEqual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fail if the two objects are unequal as determined by the &#8216;==&#8217; operator.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>first</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The first object to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="function">
-<dt id="UnitTest.assertNotEqual">
-<em class="property">proc </em><code class="descname">assertNotEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertNotEqual" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fail if the two objects are equal as determined by the &#8216;==&#8217; operator and type.</p>
+<dl class="method">
+<dt id="UnitTest.Test.assertNotEqual">
+<em class="property">proc </em><code class="descname">assertNotEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertNotEqual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert that a first argument is not equal to second argument. If it is false,
+rasies AssertionError. Uses &#8216;==&#8217; operator and type to determine if both are equal
+or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>first</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The first object to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
-<dl class="function">
-<dt id="UnitTest.assertGreaterThan">
-<em class="property">proc </em><code class="descname">assertGreaterThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertGreaterThan" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="UnitTest.Test.assertGreaterThan">
+<em class="property">proc </em><code class="descname">assertGreaterThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a first argument is greater than second argument.  If it is false, prints
 &#8216;assert failed&#8217; and rasies AssertionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>first</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The first object to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.assertLessThan">
+<em class="property">proc </em><code class="descname">assertLessThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertLessThan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert that a first argument is less than second argument.  If it is false, rasies AssertionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>first</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The first object to compare.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.maxLocales">
+<em class="property">proc </em><code class="descname">maxLocales</code><span class="sig-paren">(</span><em>value: int</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.maxLocales" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify Max Number of Locales required to run the test</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>value</strong> : <cite>int</cite>. &#8211; Maximum number of locales with which the test can be ran.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Throws UnexpectedLocalesError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <cite>value</cite> is less than 1 or <cite>minNumLocales</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.minLocales">
+<em class="property">proc </em><code class="descname">minLocales</code><span class="sig-paren">(</span><em>value: int</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.minLocales" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify Min Number of Locales required to run the test</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>value</strong> : <cite>int</cite>. &#8211; Minimum number of locales with which the test can be ran.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Throws UnexpectedLocalesError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <cite>value</cite> is more than <cite>maxNumLocales</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.addNumLocales">
+<em class="property">proc </em><code class="descname">addNumLocales</code><span class="sig-paren">(</span><em>locales: int ...?n</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.addNumLocales" title="Permalink to this definition">¶</a></dt>
+<dd><p>To add locales in which test can be run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>locales</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated locale values</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Throws UnexpectedLocalesError:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <cite>locales</cite> are already added.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="UnitTest.Test.dependsOn">
+<em class="property">proc </em><code class="descname">dependsOn</code><span class="sig-paren">(</span><em>tests: argType ...?n</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.dependsOn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the tests in which the given test is depending.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated First Class Test Functions.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
-<dt id="UnitTest.assertLessThan">
-<em class="property">proc </em><code class="descname">assertLessThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.assertLessThan" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assert that a first argument is less than second argument.  If it is false, prints
-&#8216;assert failed&#8217; and rasies AssertionError.</p>
+<dt id="UnitTest.runTest">
+<em class="property">proc </em><code class="descname">runTest</code><span class="sig-paren">(</span><em>tests: argType ...?n</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.runTest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the tests</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated First Class Test Functions.</td>
+</tr>
+</tbody>
+</table>
+<p>Call this as</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">test1</span><span class="p">,</span> <span class="nx">test2</span><span class="p">);</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>

@@ -1,6 +1,7 @@
 .. default-domain:: chpl
 
 .. module:: UnitTest
+   :synopsis: Module UnitTest provides support for automated testing in Chapel .
 
 UnitTest
 ========
@@ -10,60 +11,192 @@ UnitTest
 
    use UnitTest;
 
-.. class:: AssertionError : Error
 
-   Assertion Error class. Raised when assert Function Failed
+Module UnitTest provides support for automated testing in Chapel .
+Any function of the form
+
+.. code-block:: chapel
+  
+  proc funcName(test: Test) throws {}
+
+is treated as a test function.
+
+Example
+
+.. code-block:: chapel
+
+   use UnitTest;
+
+   proc test1(test: Test) throws {
+     test.assertTrue(True);
+   }
+
+   UnitTest.runTest(test1);
+
+Specifying locales
+
+.. code-block:: chapel
+
+   proc test2(test: Test) throws {
+     test.addNumLocales(16);
+   }
+
+   proc test3(test: Test) throws {
+     test.addNumLocales(16,8);
+   }
+  
+   proc test4(test: Test) throws {
+     test.maxLocales(4);
+     test.minLocales(2);
+   }
+
+Specifying Dependencies:
+
+.. code-block:: chapel
+
+   proc test5(test: Test) throws {
+     test.dependsOn(test3);
+   }
+
+   proc test6(test: Test) throws {
+     test.dependsOn(test2, test5);
+   }
 
 
-   .. attribute:: var details: string
 
-   .. method:: proc init(details: string = "")
 
-   .. method:: override proc message()
+.. class:: Test
 
-.. function:: proc assertTrue(test: bool) throws
+   .. method:: proc skip(reason: string = "") throws
 
+      Unconditionally skip a test.
+      
+      :arg reason: the reason for skipping
+      :type reason: `string` 
+      
+
+   .. method:: proc skipIf(condition: bool, reason: string = "") throws
+
+      
+      Skip a test if the condition is true.
+      
+      :arg condition: the boolean condition
+      :type condition: `bool`
+      
+      :arg reason: the reason for skipping
+      :type reason: `string`
+      
+
+   .. method:: proc assertTrue(test: bool) throws
+
+      
+      Assert that a boolean condition is true.  If it is false, prints
+      'assert failed' and rasies AssertionError. 
+      
+      :arg test: the boolean condition
+      :type test: `bool`
+      
+
+   .. method:: proc assertFalse(test: bool) throws
+
+      
+      Assert that a boolean condition is false.  If it is true, prints
+      'assert failed' and raises AssertionError.
+      
+      :arg test: the boolean condition
+      :type test: `bool`
+      
+
+   .. method:: proc assertEqual(first, second) throws
+
+      
+      Fail if the two objects are unequal as determined by the '==' operator.
+      
+      :arg first: The first object to compare.
+      :arg second: The first object to compare. 
+      
+
+   .. method:: proc assertNotEqual(first, second) throws
+
+      
+      Assert that a first argument is not equal to second argument. If it is false, 
+      rasies AssertionError. Uses '==' operator and type to determine if both are equal
+      or not.
+      
+      :arg first: The first object to compare.
+      :arg second: The first object to compare. 
+      
+
+   .. method:: proc assertGreaterThan(first, second) throws
+
+      
+      Assert that a first argument is greater than second argument.  If it is false, prints
+      'assert failed' and rasies AssertionError. 
+      
+      :arg first: The first object to compare.
+      :arg second: The first object to compare. 
+      
+
+   .. method:: proc assertLessThan(first, second) throws
+
+      
+      Assert that a first argument is less than second argument.  If it is false, rasies AssertionError. 
+      
+      :arg first: The first object to compare.
+      :arg second: The first object to compare. 
+      
+
+   .. method:: proc maxLocales(value: int) throws
+
+      
+      Specify Max Number of Locales required to run the test
+      
+      :arg value: Maximum number of locales with which the test can be ran.
+      :type value: `int`.
+      
+      :throws UnexpectedLocalesError: If `value` is less than 1 or `minNumLocales` 
+      
+
+   .. method:: proc minLocales(value: int) throws
+
+      
+      Specify Min Number of Locales required to run the test
+      
+      :arg value: Minimum number of locales with which the test can be ran.
+      :type value: `int`.
+      
+      :throws UnexpectedLocalesError: If `value` is more than `maxNumLocales`
+      
+
+   .. method:: proc addNumLocales(locales: int ...?n) throws
+
+      
+      To add locales in which test can be run.
+      
+      :arg locales: Multiple `","` seperated locale values
+      
+      :throws UnexpectedLocalesError: If `locales` are already added.
+      
+      
+
+   .. method:: proc dependsOn(tests: argType ...?n) throws
+
+      Adds the tests in which the given test is depending.
+      
+      :arg tests: Multiple `","` seperated First Class Test Functions.
+      
+      
+
+.. function:: proc runTest(tests: argType ...?n) throws
+
+   Runs the tests
    
-   Assert that a boolean condition is true.  If it is false, prints
-   'assert failed' and rasies AssertionError. 
+   :arg tests: Multiple `","` seperated First Class Test Functions.
    
-   :arg test: the boolean condition
-   :type test: `bool`
+   Call this as 
    
-
-.. function:: proc assertFalse(test: bool) throws
-
+   .. code-block:: chapel
    
-   Assert that a boolean condition is false.  If it is true, prints
-   'assert failed' and raises AssertionError.
-   
-   :arg test: the boolean condition
-   :type test: `bool`
-   
-
-.. function:: proc assertEqual(first, second) throws
-
-   
-   Fail if the two objects are unequal as determined by the '==' operator.
-   
-
-.. function:: proc assertNotEqual(first, second) throws
-
-   
-   Fail if the two objects are equal as determined by the '==' operator and type.
-   
-
-.. function:: proc assertGreaterThan(first, second) throws
-
-   
-   Assert that a first argument is greater than second argument.  If it is false, prints
-   'assert failed' and rasies AssertionError. 
-   
-
-.. function:: proc assertLessThan(first, second) throws
-
-   
-   Assert that a first argument is less than second argument.  If it is false, prints
-   'assert failed' and rasies AssertionError. 
+     UnitTest.runTest(test1, test2);
    
 
