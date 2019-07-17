@@ -1,7 +1,7 @@
 .. default-domain:: chpl
 
 .. module:: UnitTest
-   :synopsis: Module UnitTest provides support for automated testing in Chapel .
+   :synopsis: Module UnitTest provides support for automated testing in Chapel.
 
 UnitTest
 ========
@@ -12,16 +12,28 @@ UnitTest
    use UnitTest;
 
 
-Module UnitTest provides support for automated testing in Chapel .
+Module UnitTest provides support for automated testing in Chapel.
 Any function of the form
 
 .. code-block:: chapel
   
   proc funcName(test: Test) throws {}
 
-is treated as a test function.
+is treated as a test function. These functions must accept an object of Test
+Class. We use :proc:`~UnitTest.runTest` to pass the tests.
 
-Example
+**Example**
+
+*Using Asserts*
+
+:proc:`~Test.skip`
+:proc:`~Test.skipIf`
+:proc:`~Test.assertTrue`
+:proc:`~Test.assertFalse`
+:proc:`~Test.assertEqual`
+:proc:`~Test.assertNotEqual`
+:proc:`~Test.assertGreaterThan`
+:proc:`~Test.assertLessThan`
 
 .. code-block:: chapel
 
@@ -33,7 +45,11 @@ Example
 
    UnitTest.runTest(test1);
 
-Specifying locales
+*Specifying locales*
+
+:proc:`~Test.addNumLocales`
+:proc:`~Test.maxLocales`
+:proc:`~Test.minLocales`
 
 .. code-block:: chapel
 
@@ -50,7 +66,9 @@ Specifying locales
      test.minLocales(2);
    }
 
-Specifying Dependencies:
+*Specifying Dependencies*
+
+:proc:`~Test.dependsOn`
 
 .. code-block:: chapel
 
@@ -91,7 +109,7 @@ Specifying Dependencies:
 
       
       Assert that a boolean condition is true.  If it is false, prints
-      'assert failed' and rasies AssertionError. 
+      ``assert failed`` and raises AssertionError. 
       
       :arg test: the boolean condition
       :type test: `bool`
@@ -101,7 +119,7 @@ Specifying Dependencies:
 
       
       Assert that a boolean condition is false.  If it is true, prints
-      'assert failed' and raises AssertionError.
+      ``assert failed`` and raises AssertionError.
       
       :arg test: the boolean condition
       :type test: `bool`
@@ -110,40 +128,40 @@ Specifying Dependencies:
    .. method:: proc assertEqual(first, second) throws
 
       
-      Fail if the two objects are unequal as determined by the '==' operator.
+      Fail if the two objects are unequal as determined by the ``==`` operator.
       
       :arg first: The first object to compare.
-      :arg second: The first object to compare. 
+      :arg second: The second object to compare. 
       
 
    .. method:: proc assertNotEqual(first, second) throws
 
       
       Assert that a first argument is not equal to second argument. If it is false, 
-      rasies AssertionError. Uses '==' operator and type to determine if both are equal
+      raises AssertionError. Uses ``==`` operator and type to determine if both are equal
       or not.
       
       :arg first: The first object to compare.
-      :arg second: The first object to compare. 
+      :arg second: The second object to compare. 
       
 
    .. method:: proc assertGreaterThan(first, second) throws
 
       
       Assert that a first argument is greater than second argument.  If it is false, prints
-      'assert failed' and rasies AssertionError. 
+      ``assert failed`` and raises AssertionError. 
       
       :arg first: The first object to compare.
-      :arg second: The first object to compare. 
+      :arg second: The second object to compare. 
       
 
    .. method:: proc assertLessThan(first, second) throws
 
       
-      Assert that a first argument is less than second argument.  If it is false, rasies AssertionError. 
+      Assert that a first argument is less than second argument.  If it is false, raises AssertionError. 
       
       :arg first: The first object to compare.
-      :arg second: The first object to compare. 
+      :arg second: The second object to compare. 
       
 
    .. method:: proc maxLocales(value: int) throws
@@ -173,7 +191,7 @@ Specifying Dependencies:
       
       To add locales in which test can be run.
       
-      :arg locales: Multiple `","` seperated locale values
+      :arg locales: Multiple ``,`` separated locale values
       
       :throws UnexpectedLocalesError: If `locales` are already added.
       
@@ -183,7 +201,7 @@ Specifying Dependencies:
 
       Adds the tests in which the given test is depending.
       
-      :arg tests: Multiple `","` seperated First Class Test Functions.
+      :arg tests: Multiple ``,`` separated First Class Test Functions.
       
       
 
@@ -191,7 +209,7 @@ Specifying Dependencies:
 
    Runs the tests
    
-   :arg tests: Multiple `","` seperated First Class Test Functions.
+   :arg tests: Multiple ``,`` separated First Class Test Functions.
    
    Call this as 
    

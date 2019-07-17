@@ -135,13 +135,23 @@
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Module UnitTest provides support for automated testing in Chapel .
+<p>Module UnitTest provides support for automated testing in Chapel.
 Any function of the form</p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">funcName</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{}</span>
 </pre></div>
 </div>
-<p>is treated as a test function.</p>
-<p>Example</p>
+<p>is treated as a test function. These functions must accept an object of Test
+Class. We use <a class="reference internal" href="#UnitTest.runTest" title="UnitTest.runTest"><code class="xref chpl chpl-proc docutils literal"><span class="pre">runTest</span></code></a> to pass the tests.</p>
+<p><strong>Example</strong></p>
+<p><em>Using Asserts</em></p>
+<p><a class="reference internal" href="#UnitTest.Test.skip" title="UnitTest.Test.skip"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skip</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.skipIf" title="UnitTest.Test.skipIf"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skipIf</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertTrue" title="UnitTest.Test.assertTrue"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertTrue</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertFalse" title="UnitTest.Test.assertFalse"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertFalse</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertEqual" title="UnitTest.Test.assertEqual"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertEqual</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertNotEqual" title="UnitTest.Test.assertNotEqual"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertNotEqual</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertGreaterThan" title="UnitTest.Test.assertGreaterThan"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertGreaterThan</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.assertLessThan" title="UnitTest.Test.assertLessThan"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertLessThan</span></code></a></p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
 
 <span class="k">proc</span> <span class="nf">test1</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
@@ -151,7 +161,10 @@ Any function of the form</p>
 <span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">test1</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Specifying locales</p>
+<p><em>Specifying locales</em></p>
+<p><a class="reference internal" href="#UnitTest.Test.addNumLocales" title="UnitTest.Test.addNumLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">addNumLocales</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.maxLocales" title="UnitTest.Test.maxLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">maxLocales</span></code></a>
+<a class="reference internal" href="#UnitTest.Test.minLocales" title="UnitTest.Test.minLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">minLocales</span></code></a></p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test2</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
   <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
 <span class="p">}</span>
@@ -166,7 +179,8 @@ Any function of the form</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Specifying Dependencies:</p>
+<p><em>Specifying Dependencies</em></p>
+<p><a class="reference internal" href="#UnitTest.Test.dependsOn" title="UnitTest.Test.dependsOn"><code class="xref chpl chpl-proc docutils literal"><span class="pre">dependsOn</span></code></a></p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test5</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
   <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">test3</span><span class="p">);</span>
 <span class="p">}</span>
@@ -215,7 +229,7 @@ Any function of the form</p>
 <dt id="UnitTest.Test.assertTrue">
 <em class="property">proc </em><code class="descname">assertTrue</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertTrue" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a boolean condition is true.  If it is false, prints
-&#8216;assert failed&#8217; and rasies AssertionError.</p>
+<code class="docutils literal"><span class="pre">assert</span> <span class="pre">failed</span></code> and raises AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -230,7 +244,7 @@ Any function of the form</p>
 <dt id="UnitTest.Test.assertFalse">
 <em class="property">proc </em><code class="descname">assertFalse</code><span class="sig-paren">(</span><em>test: bool</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertFalse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a boolean condition is false.  If it is true, prints
-&#8216;assert failed&#8217; and raises AssertionError.</p>
+<code class="docutils literal"><span class="pre">assert</span> <span class="pre">failed</span></code> and raises AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -244,14 +258,14 @@ Any function of the form</p>
 <dl class="method">
 <dt id="UnitTest.Test.assertEqual">
 <em class="property">proc </em><code class="descname">assertEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertEqual" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fail if the two objects are unequal as determined by the &#8216;==&#8217; operator.</p>
+<dd><p>Fail if the two objects are unequal as determined by the <code class="docutils literal"><span class="pre">==</span></code> operator.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>first</strong> &#8211; The first object to compare.</li>
-<li><strong>second</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The second object to compare.</li>
 </ul>
 </td>
 </tr>
@@ -263,7 +277,7 @@ Any function of the form</p>
 <dt id="UnitTest.Test.assertNotEqual">
 <em class="property">proc </em><code class="descname">assertNotEqual</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertNotEqual" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a first argument is not equal to second argument. If it is false,
-rasies AssertionError. Uses &#8216;==&#8217; operator and type to determine if both are equal
+raises AssertionError. Uses <code class="docutils literal"><span class="pre">==</span></code> operator and type to determine if both are equal
 or not.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -271,7 +285,7 @@ or not.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>first</strong> &#8211; The first object to compare.</li>
-<li><strong>second</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The second object to compare.</li>
 </ul>
 </td>
 </tr>
@@ -283,14 +297,14 @@ or not.</p>
 <dt id="UnitTest.Test.assertGreaterThan">
 <em class="property">proc </em><code class="descname">assertGreaterThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertGreaterThan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assert that a first argument is greater than second argument.  If it is false, prints
-&#8216;assert failed&#8217; and rasies AssertionError.</p>
+<code class="docutils literal"><span class="pre">assert</span> <span class="pre">failed</span></code> and raises AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>first</strong> &#8211; The first object to compare.</li>
-<li><strong>second</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The second object to compare.</li>
 </ul>
 </td>
 </tr>
@@ -301,14 +315,14 @@ or not.</p>
 <dl class="method">
 <dt id="UnitTest.Test.assertLessThan">
 <em class="property">proc </em><code class="descname">assertLessThan</code><span class="sig-paren">(</span><em>first</em>, <em>second</em><span class="sig-paren">)</span> throws<a class="headerlink" href="#UnitTest.Test.assertLessThan" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assert that a first argument is less than second argument.  If it is false, rasies AssertionError.</p>
+<dd><p>Assert that a first argument is less than second argument.  If it is false, raises AssertionError.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
 <li><strong>first</strong> &#8211; The first object to compare.</li>
-<li><strong>second</strong> &#8211; The first object to compare.</li>
+<li><strong>second</strong> &#8211; The second object to compare.</li>
 </ul>
 </td>
 </tr>
@@ -358,7 +372,7 @@ or not.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>locales</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated locale values</td>
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>locales</strong> &#8211; Multiple <code class="docutils literal"><span class="pre">,</span></code> separated locale values</td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Throws UnexpectedLocalesError:</th></tr>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body">If <cite>locales</cite> are already added.</td>
@@ -375,7 +389,7 @@ or not.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated First Class Test Functions.</td>
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <code class="docutils literal"><span class="pre">,</span></code> separated First Class Test Functions.</td>
 </tr>
 </tbody>
 </table>
@@ -391,7 +405,7 @@ or not.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <cite>&#8221;,&#8221;</cite> seperated First Class Test Functions.</td>
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><strong>tests</strong> &#8211; Multiple <code class="docutils literal"><span class="pre">,</span></code> separated First Class Test Functions.</td>
 </tr>
 </tbody>
 </table>
