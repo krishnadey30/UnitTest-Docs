@@ -154,11 +154,46 @@ Class. We use <a class="reference internal" href="#UnitTest.runTest" title="Unit
 <a class="reference internal" href="#UnitTest.Test.assertLessThan" title="UnitTest.Test.assertLessThan"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertLessThan</span></code></a></p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
 
+<span class="c1">// calculates factorial</span>
+<span class="k">proc</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span><span class="p">:</span> <span class="kt">int</span><span class="p">):</span> <span class="kt">int</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">if</span> <span class="nx">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">x</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
 <span class="k">proc</span> <span class="nf">test1</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
-  <span class="nx">test</span><span class="p">.</span><span class="nx">assertTrue</span><span class="p">(</span><span class="nx">True</span><span class="p">);</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">skipIf</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;Base condtion is wrong in factorial&quot;</span><span class="p">);</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">assertTrue</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="mi">120</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">test1</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Another Example</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
+
+<span class="k">proc</span> <span class="nf">celius2fahrenheit</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nx">x</span> <span class="o">*</span> <span class="mi">9</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span><span class="o">+</span><span class="mi">32</span><span class="p">;</span>
+  <span class="c1">// we should be returning &quot;(x: real * 9/5)+32&quot;</span>
+<span class="p">}</span>
+
+<span class="k">proc</span> <span class="nf">test_temperature</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">assertFalse</span><span class="p">(</span><span class="nx">celius2fahrenheit</span><span class="p">(</span><span class="mi">37</span><span class="p">)</span> <span class="o">==</span> <span class="mi">98</span><span class="p">);</span>
+  <span class="c1">// we were expecting 98.6 but since we missed typecasting</span>
+  <span class="c1">// the above function returned 98.</span>
+<span class="p">}</span>
+
+<span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">test_temperature</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="o">======================================================================</span>
+FAIL xyz.chpl: test_temperature<span class="o">()</span>
+----------------------------------------------------------------------
+AssertionError: assertFalse failed. Given expression is True
+
+----------------------------------------------------------------------
+Run <span class="m">1</span> <span class="nb">test</span>
+
+FAILED <span class="nv">failures</span> <span class="o">=</span> <span class="m">1</span>
 </pre></div>
 </div>
 <p><em>Specifying locales</em></p>
@@ -181,13 +216,30 @@ Class. We use <a class="reference internal" href="#UnitTest.runTest" title="Unit
 </div>
 <p><em>Specifying Dependencies</em></p>
 <p><a class="reference internal" href="#UnitTest.Test.dependsOn" title="UnitTest.Test.dependsOn"><code class="xref chpl chpl-proc docutils literal"><span class="pre">dependsOn</span></code></a></p>
-<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test5</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
-  <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">test3</span><span class="p">);</span>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">factArray</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="mi">0</span><span class="p">]</span> <span class="kt">int</span><span class="p">;</span>
+
+<span class="c1">// calculates factorial</span>
+<span class="k">proc</span> <span class="nf">factorial</span><span class="p">(</span><span class="nx">x</span><span class="p">:</span> <span class="kt">int</span><span class="p">):</span> <span class="kt">int</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">if</span> <span class="nx">x</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">factorial</span><span class="p">(</span><span class="nx">x</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="k">proc</span> <span class="nf">test6</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
-  <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">test2</span><span class="p">,</span> <span class="nx">test5</span><span class="p">);</span>
+<span class="k">proc</span> <span class="nf">testFillFact</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">skipIf</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">,</span><span class="s">&quot;Base condtion is wrong in factorial&quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="nx">i</span> <span class="kd">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="k">do</span>
+    <span class="nx">factArray</span><span class="p">.</span><span class="nx">push_back</span><span class="p">(</span><span class="nx">factorial</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
 <span class="p">}</span>
+
+<span class="k">proc</span> <span class="nf">testSumFact</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">dependsOn</span><span class="p">(</span><span class="nx">testFillFact</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="nx">i</span> <span class="kd">in</span> <span class="mi">1</span><span class="o">..</span><span class="mi">10</span> <span class="k">do</span>
+    <span class="nx">s</span> <span class="o">+=</span> <span class="nx">factArray</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">assertGreaterThan</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">UnitTest</span><span class="p">.</span><span class="nx">runTest</span><span class="p">(</span><span class="nx">testSumFact</span><span class="p">,</span> <span class="nx">testFillFact</span><span class="p">);</span>
 </pre></div>
 </div>
 <dl class="class">
