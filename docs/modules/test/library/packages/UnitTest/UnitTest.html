@@ -200,15 +200,27 @@ FAILED <span class="nv">failures</span> <span class="o">=</span> <span class="m"
 <p><a class="reference internal" href="#UnitTest.Test.addNumLocales" title="UnitTest.Test.addNumLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">addNumLocales</span></code></a>
 <a class="reference internal" href="#UnitTest.Test.maxLocales" title="UnitTest.Test.maxLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">maxLocales</span></code></a>
 <a class="reference internal" href="#UnitTest.Test.minLocales" title="UnitTest.Test.minLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">minLocales</span></code></a></p>
-<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test2</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
-  <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">16</span><span class="p">);</span>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test_square</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">A</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="nx">numLocales</span><span class="p">]</span> <span class="kt">int</span><span class="p">;</span>
+  <span class="k">coforall</span> <span class="nx">i</span> <span class="kd">in</span> <span class="mi">0</span><span class="o">..</span><span class="nx">numLocales</span><span class="o">-</span><span class="mi">1</span> <span class="k">with</span> <span class="p">(</span><span class="kd">ref</span> <span class="nx">A</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">on</span> <span class="nx">Locales</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">A</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">test</span><span class="p">.</span><span class="nx">assertTrue</span><span class="p">(</span><span class="nx">A</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">==</span><span class="mi">25</span><span class="p">);</span>
 <span class="p">}</span>
-
-<span class="k">proc</span> <span class="nf">test3</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>You can also specify multiple locales on which your code can run.</p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test3</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
   <span class="nx">test</span><span class="p">.</span><span class="nx">addNumLocales</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
 <span class="p">}</span>
-
-<span class="k">proc</span> <span class="nf">test4</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+</pre></div>
+</div>
+<p>You can mention the range of locales using <a class="reference internal" href="#UnitTest.Test.maxLocales" title="UnitTest.Test.maxLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">maxLocales</span></code></a> and
+<a class="reference internal" href="#UnitTest.Test.minLocales" title="UnitTest.Test.minLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">minLocales</span></code></a></p>
+<div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">proc</span> <span class="nf">test4</span><span class="p">(</span><span class="nx">test</span><span class="p">:</span> <span class="nx">Test</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
   <span class="nx">test</span><span class="p">.</span><span class="nx">maxLocales</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
   <span class="nx">test</span><span class="p">.</span><span class="nx">minLocales</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
 <span class="p">}</span>
