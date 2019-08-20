@@ -84,13 +84,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">chpldoc documentation</a></li>
 </ul>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="">UnitTest</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#assert-functions">Assert Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#examples">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#skipping-tests">Skipping Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#specifying-locales">Specifying locales</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#specifying-dependencies">Specifying Dependencies</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">UnitTest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#assert-functions">Assert Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipping-tests">Skipping Tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-locales">Specifying locales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#specifying-dependencies">Specifying Dependencies</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -155,9 +157,8 @@ Class. We use <a class="reference internal" href="#UnitTest.main" title="UnitTes
 <p class="last">Tests must be launched with a test launcher. Currently, this is a standalone application
 built separately. However, this functionality will eventually be integrated into mason.</p>
 </div>
-</div>
 <div class="section" id="assert-functions">
-<h1>Assert Functions<a class="headerlink" href="#assert-functions" title="Permalink to this headline">¶</a></h1>
+<h2>Assert Functions<a class="headerlink" href="#assert-functions" title="Permalink to this headline">¶</a></h2>
 <p>Here are the assert functions available in the UnitTest module:</p>
 <ul class="simple">
 <li><a class="reference internal" href="#UnitTest.Test.skip" title="UnitTest.Test.skip"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skip</span></code></a></li>
@@ -171,9 +172,9 @@ built separately. However, this functionality will eventually be integrated into
 </ul>
 </div>
 <div class="section" id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-usage">
-<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h3>
 <p>Here is a minimal example demonstrating how to use the UnitTest module:</p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
 
@@ -205,7 +206,7 @@ FAILED <span class="nv">failures</span> <span class="o">=</span> <span class="m"
 </div>
 </div>
 <div class="section" id="skipping-tests">
-<h2>Skipping Tests<a class="headerlink" href="#skipping-tests" title="Permalink to this headline">¶</a></h2>
+<h3>Skipping Tests<a class="headerlink" href="#skipping-tests" title="Permalink to this headline">¶</a></h3>
 <p>You can skip tests unconditionally with <a class="reference internal" href="#UnitTest.Test.skip" title="UnitTest.Test.skip"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skip</span></code></a> and
 conditionally with <a class="reference internal" href="#UnitTest.Test.skipIf" title="UnitTest.Test.skipIf"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skipIf</span></code></a>:</p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
@@ -243,7 +244,7 @@ OK <span class="nv">skipped</span> <span class="o">=</span> <span class="m">1</s
 </div>
 </div>
 <div class="section" id="specifying-locales">
-<h2>Specifying locales<a class="headerlink" href="#specifying-locales" title="Permalink to this headline">¶</a></h2>
+<h3>Specifying locales<a class="headerlink" href="#specifying-locales" title="Permalink to this headline">¶</a></h3>
 <p>You can specify the num of locales of a test using these method.</p>
 <p><a class="reference internal" href="#UnitTest.Test.addNumLocales" title="UnitTest.Test.addNumLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">addNumLocales</span></code></a>
 <a class="reference internal" href="#UnitTest.Test.maxLocales" title="UnitTest.Test.maxLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">maxLocales</span></code></a>
@@ -284,7 +285,7 @@ OK
 </div>
 </div>
 <div class="section" id="specifying-dependencies">
-<h2>Specifying Dependencies<a class="headerlink" href="#specifying-dependencies" title="Permalink to this headline">¶</a></h2>
+<h3>Specifying Dependencies<a class="headerlink" href="#specifying-dependencies" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="#UnitTest.Test.dependsOn" title="UnitTest.Test.dependsOn"><code class="xref chpl chpl-proc docutils literal"><span class="pre">dependsOn</span></code></a></p>
 <p>Here is an example demonstrating how to use the <a class="reference internal" href="#UnitTest.Test.dependsOn" title="UnitTest.Test.dependsOn"><code class="xref chpl chpl-proc docutils literal"><span class="pre">dependsOn</span></code></a></p>
 <div class="highlight-chapel"><div class="highlight"><pre><span></span><span class="k">use</span> <span class="nx">UnitTest</span><span class="p">;</span>
@@ -569,6 +570,7 @@ or not.</p>
 </div>
 </dd></dl>
 
+</div>
 </div>
 </div>
 
