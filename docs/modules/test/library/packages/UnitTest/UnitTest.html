@@ -86,6 +86,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">UnitTest</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#assert-functions">Assert Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#test-metadata-functions">Test Metadata Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#skipping-tests">Skipping Tests</a></li>
@@ -161,14 +162,24 @@ built separately. However, this functionality will eventually be integrated into
 <h2>Assert Functions<a class="headerlink" href="#assert-functions" title="Permalink to this headline">¶</a></h2>
 <p>Here are the assert functions available in the UnitTest module:</p>
 <ul class="simple">
-<li><a class="reference internal" href="#UnitTest.Test.skip" title="UnitTest.Test.skip"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skip</span></code></a></li>
-<li><a class="reference internal" href="#UnitTest.Test.skipIf" title="UnitTest.Test.skipIf"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skipIf</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertTrue" title="UnitTest.Test.assertTrue"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertTrue</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertFalse" title="UnitTest.Test.assertFalse"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertFalse</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertEqual" title="UnitTest.Test.assertEqual"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertEqual</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertNotEqual" title="UnitTest.Test.assertNotEqual"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertNotEqual</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertGreaterThan" title="UnitTest.Test.assertGreaterThan"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertGreaterThan</span></code></a></li>
 <li><a class="reference internal" href="#UnitTest.Test.assertLessThan" title="UnitTest.Test.assertLessThan"><code class="xref chpl chpl-proc docutils literal"><span class="pre">assertLessThan</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="test-metadata-functions">
+<h2>Test Metadata Functions<a class="headerlink" href="#test-metadata-functions" title="Permalink to this headline">¶</a></h2>
+<p>UnitTest module also provides multiple methods for specifying test Metadata:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#UnitTest.Test.skip" title="UnitTest.Test.skip"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skip</span></code></a></li>
+<li><a class="reference internal" href="#UnitTest.Test.skipIf" title="UnitTest.Test.skipIf"><code class="xref chpl chpl-proc docutils literal"><span class="pre">skipIf</span></code></a></li>
+<li><a class="reference internal" href="#UnitTest.Test.addNumLocales" title="UnitTest.Test.addNumLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">addNumLocales</span></code></a></li>
+<li><a class="reference internal" href="#UnitTest.Test.maxLocales" title="UnitTest.Test.maxLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">maxLocales</span></code></a></li>
+<li><a class="reference internal" href="#UnitTest.Test.minLocales" title="UnitTest.Test.minLocales"><code class="xref chpl chpl-proc docutils literal"><span class="pre">minLocales</span></code></a></li>
+<li><a class="reference internal" href="#UnitTest.Test.dependsOn" title="UnitTest.Test.dependsOn"><code class="xref chpl chpl-proc docutils literal"><span class="pre">dependsOn</span></code></a></li>
 </ul>
 </div>
 <div class="section" id="examples">
